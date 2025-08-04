@@ -1,8 +1,10 @@
-﻿using BookLibraryAPI.Core.Domain.Interfaces.Repositories;
+﻿using BookLibraryAPI.Application.Common.Services.Authentication;
+using BookLibraryAPI.Core.Domain.Interfaces.Repositories;
 using BookLibraryAPI.Infrastructure.Persistence;
 using BookLibraryAPI.Infrastructure.Repositories;
 using BookLibraryAPI.Infrastructure.Repositories.Books;
 using BookLibraryAPI.Infrastructure.Repositories.Users;
+using BookLibraryAPI.Infrastructure.Services.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,6 +24,8 @@ public static class DependencyInjection
         services.AddScoped<IBookRepository, BookRepository>();
         
         services.AddScoped<IUserRepository, UserRepository>();
+
+        services.AddScoped<IAuthenticationService, AuthenticationService>();
 
         return services;
     }
