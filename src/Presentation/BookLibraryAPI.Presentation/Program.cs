@@ -1,9 +1,15 @@
+using BookLibraryAPI.Application;
+using BookLibraryAPI.Infrastructure;
 using BookLibraryAPI.Presentation.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services
+    .AddApplication()
+    .AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 
