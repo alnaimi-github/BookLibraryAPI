@@ -1,6 +1,7 @@
 ﻿using BookLibraryAPI.Application.Common.DTOs.Books;
 using BookLibraryAPI.Application.Common.Mappers.Books;
 using BookLibraryAPI.Application.Features.Books.Commands.CreateBook;
+using BookLibraryAPI.Application.Features.Books.Commands.UpdateBook;
 using BookLibraryAPI.Application.Features.Books.Queries.GetAllBooks;
 using BookLibraryAPI.Application.Features.Books.Queries.GetBookById;
 using FluentValidation;
@@ -48,6 +49,18 @@ public static class BookEndpoints
             .Produces(500)
             .WithName("GetBookById")
             .RequireAuthorization();
+
+        books.MapPut("/{id:int}", UpdateBookAsync)
+            .WithName("UpdateBook")
+            .WithSummary("Update a book")
+            .WithDescription("Update an existing book. Requires Moderator or Admin role.")
+            .Produces<bool>(200)
+            .Produces<ValidationProblemDetails>(400)
+            .Produces(401)
+            .Produces(403)
+            .Produces(404)
+            .Produces(500)
+            .RequireAuthorization("ModeratorOrAdmin");
     }
 
     private static async Task<IResult> CreateBookAsync(
@@ -122,6 +135,36 @@ public static class BookEndpoints
                 problemDetails.Detail,
                 statusCode: problemDetails.Status,
                 title: problemDetails.Title);
+        }
+        return Results.Ok(result.Value);
+    }
+
+    private static async Task<IResult> UpdateBookAsync(
+        int id,
+        [FromBody] UpdateBookDto request,
+        IMediator mediator,
+        IValidator<UpdateBookCommand> validator,
+        CancellationToken cancellationToken)
+    {
+        if (id != request.Id)
+        {
+            var errors = new Dictionary<string, string[]> { { "Id", new[] { "Route id and body id must match." } } };
+            return Results.ValidationProblem(errors, statusCode: 400);
+        }
+        var command = request.ToCommand();
+        var validationResult = await validator.ValidateAsync(command, cancellationToken);
+        if (!validationResult.IsValid)
+        {
+            var errors = validationResult.Errors
+                .GroupBy(e => e.PropertyName)
+                .ToDictionary(g => g.Key, g => g.Select(e => e.ErrorMessage).ToArray());
+            return Results.ValidationProblem(errors);
+        }
+        var result = await mediator.Send(command, cancellationToken);
+        if (!result.IsSuccess)
+        {
+            var errors = new Dictionary<string, string[]> { { "Update", [result.Error ?? "Update failed"] } };
+            return Results.ValidationProblem(errors, statusCode: 400);
         }
         return Results.Ok(result.Value);
     }
