@@ -2,7 +2,7 @@
 
 namespace BookLibraryAPI.Core.Domain.ValueObjects;
 
-public sealed record BookTitle
+public  record BookTitle
 {
     public string Value { get; }
 

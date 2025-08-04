@@ -18,15 +18,17 @@ public sealed class ConfigurationBooks : IEntityTypeConfiguration<Book>
             .IsRequired()
             .HasMaxLength(200)
             .HasConversion(
-                v => v.Value,
-                v => BookTitle.Create(v));
+                title => title.Value,
+                value => BookTitle.Create(value))
+            .HasColumnName("Title");
 
         builder.Property(e => e.Author)
             .IsRequired()
             .HasMaxLength(100)
             .HasConversion(
-                v => v.Value,
-                v => BookAuthor.Create(v));
+                author => author.Value,
+                value => BookAuthor.Create(value))
+            .HasColumnName("Author");
             
         
         builder.Property(e => e.Year)
@@ -40,24 +42,6 @@ public sealed class ConfigurationBooks : IEntityTypeConfiguration<Book>
         builder.HasIndex("Title");
         builder.HasIndex("Author");
         
-        builder.HasData(GetSeedBooks());
-    }
-    private static object[] GetSeedBooks()
-    {
-        var createdAt = new DateTime(2025, 1, 1);
+   }
 
-        return
-        [
-            new { Id = 1, Title = "The Great Gatsby", Author = "F. Scott Fitzgerald", Year = 1925, CreatedAt = createdAt, UpdatedAt = (DateTime?)null },
-            new { Id = 2, Title = "To Kill a Mockingbird", Author = "Harper Lee", Year = 1960, CreatedAt = createdAt, UpdatedAt = (DateTime?)null },
-            new { Id = 3, Title = "1984", Author = "George Orwell", Year = 1949, CreatedAt = createdAt, UpdatedAt = (DateTime?)null },
-            new { Id = 4, Title = "Pride and Prejudice", Author = "Jane Austen", Year = 1813, CreatedAt = createdAt, UpdatedAt = (DateTime?)null },
-            new { Id = 5, Title = "The Catcher in the Rye", Author = "J.D. Salinger", Year = 1951, CreatedAt = createdAt, UpdatedAt = (DateTime?)null },
-            new { Id = 6, Title = "The Lord of the Rings", Author = "J.R.R. Tolkien", Year = 1954, CreatedAt = createdAt, UpdatedAt = (DateTime?)null },
-            new { Id = 7, Title = "The Hobbit", Author = "J.R.R. Tolkien", Year = 1937, CreatedAt = createdAt, UpdatedAt = (DateTime?)null },
-            new { Id = 8, Title = "Fahrenheit 451", Author = "Ray Bradbury", Year = 1953, CreatedAt = createdAt, UpdatedAt = (DateTime?)null },
-            new { Id = 9, Title = "Brave New World", Author = "Aldous Huxley", Year = 1932, CreatedAt = createdAt, UpdatedAt = (DateTime?)null },
-            new { Id = 10, Title = "The Picture of Dorian Gray", Author = "Oscar Wilde", Year = 1890, CreatedAt = createdAt, UpdatedAt = (DateTime?)null }
-        ];
-    }
 }

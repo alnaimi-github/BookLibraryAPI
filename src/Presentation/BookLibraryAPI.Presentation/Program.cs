@@ -1,5 +1,7 @@
 using BookLibraryAPI.Application;
 using BookLibraryAPI.Infrastructure;
+using BookLibraryAPI.Infrastructure.Persistence;
+using BookLibraryAPI.Presentation.Extensions;
 using BookLibraryAPI.Presentation.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,8 +19,12 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    
+    app.ApplyMigrations();
+    
+    app.Seed();
 }
 
-app.UseMiddleware<ErrorHandlingMiddleware>();
+app.UseCustomExceptionHandler();
 
 app.Run();
