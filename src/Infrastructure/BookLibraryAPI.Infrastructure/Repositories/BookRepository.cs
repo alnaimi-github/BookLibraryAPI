@@ -22,7 +22,6 @@ internal sealed class BookRepository(LibraryDbContext context) : IBookRepository
 
     public async Task<Book> AddAsync(Book book, CancellationToken cancellationToken = default)
     {
-        
         context.Books.Add(book);
         await context.SaveChangesAsync(cancellationToken);
         
