@@ -9,6 +9,8 @@ public class User : BaseEntity
     public string PasswordHash { get; private set; } = string.Empty;
     public UserRole Role { get; private set; }
     
+    private User() { } // EF Core requires a parameterless constructor
+    
     public static User Create(string username, string passwordHash, UserRole role)
     {
         return new User

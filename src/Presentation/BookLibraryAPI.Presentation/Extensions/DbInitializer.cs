@@ -2,6 +2,7 @@
 using BookLibraryAPI.Core.Domain.Users;
 using BookLibraryAPI.Core.Domain.Users.Enums;
 using BookLibraryAPI.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookLibraryAPI.Presentation.Extensions;
 
@@ -19,7 +20,7 @@ public static class DbInitializer
 
     private static void SeedBooks(LibraryDbContext context, ILogger? logger)
     {
-        if (!context.Books.Any())
+        if (!context.Books.AsNoTracking().Any())
         {
             var books = new[]
             {
@@ -42,7 +43,7 @@ public static class DbInitializer
 
     private static void SeedUsers(LibraryDbContext context, ILogger? logger)
     {
-        if (!context.Users.Any())
+        if (!context.Users.AsNoTracking().Any())
         {
             var users = new[]
             {
