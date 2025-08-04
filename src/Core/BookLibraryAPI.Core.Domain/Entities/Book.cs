@@ -1,26 +1,27 @@
 ﻿using BookLibraryAPI.Core.Domain.Common;
+using BookLibraryAPI.Core.Domain.ValueObjects;
 
 namespace BookLibraryAPI.Core.Domain.Entities;
 
 public sealed class Book : BaseEntity
 {
-    public string Title { get; private set; } = string.Empty;
-    public string Author { get; private set; } = string.Empty;
+    public BookTitle Title { get; private set; } 
+    public BookAuthor Author { get; private set; }
     public int Year { get; private set; }
     
     public static Book Create(string title, string author, int year)
     {
         return new Book
         {
-            Title = title.Trim(),
-            Author = author.Trim(),
+            Title = BookTitle.Create(title),
+            Author = BookAuthor.Create(author),
             Year = year
         };
     }
     public void Update(string title, string author, int year)
     {
-        Title = title.Trim();
-        Author = author.Trim();
+        Title = BookTitle.Create(title);
+        Author = BookAuthor.Create(author);
         Year = year;
         SetUpdatedAt();
     }

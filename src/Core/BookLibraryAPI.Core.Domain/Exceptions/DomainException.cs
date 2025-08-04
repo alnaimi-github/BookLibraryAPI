@@ -2,5 +2,10 @@
 
 public class DomainException : Exception
 {
-    public DomainException(string message) : base(message) { }
+    public string Value { get; }
+
+    public DomainException(string value, string message) : base($"{message} (Value: {value})")
+    {
+        Value = value;
+    }
 }
