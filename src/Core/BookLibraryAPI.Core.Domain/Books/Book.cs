@@ -1,7 +1,7 @@
 ﻿using BookLibraryAPI.Core.Domain.Common;
 using BookLibraryAPI.Core.Domain.ValueObjects;
 
-namespace BookLibraryAPI.Core.Domain.Entities;
+namespace BookLibraryAPI.Core.Domain.Books;
 
 public sealed class Book : BaseEntity
 {

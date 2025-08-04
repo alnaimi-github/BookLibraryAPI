@@ -1,6 +1,6 @@
-﻿using BookLibraryAPI.Core.Domain.Entities;
-using BookLibraryAPI.Application.Common.DTOs.Books;
+﻿using BookLibraryAPI.Application.Common.DTOs.Books;
 using BookLibraryAPI.Application.Features.Books.Commands.CreateBook;
+using BookLibraryAPI.Core.Domain.Books;
 
 namespace BookLibraryAPI.Application.Common.Mappers.Books;
 

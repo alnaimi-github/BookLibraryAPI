@@ -1,7 +1,7 @@
 ﻿using BookLibraryAPI.Application.Common.DTOs.Books;
 using BookLibraryAPI.Application.Common.Mappers.Books;
+using BookLibraryAPI.Core.Domain.Books;
 using BookLibraryAPI.Core.Domain.Common;
-using BookLibraryAPI.Core.Domain.Entities;
 using BookLibraryAPI.Core.Domain.Interfaces.Repositories;
 using MediatR;
 

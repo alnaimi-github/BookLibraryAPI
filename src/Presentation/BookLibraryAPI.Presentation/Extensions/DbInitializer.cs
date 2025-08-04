@@ -1,4 +1,4 @@
-﻿using BookLibraryAPI.Core.Domain.Entities;
+﻿using BookLibraryAPI.Core.Domain.Books;
 using BookLibraryAPI.Infrastructure.Persistence;
 
 namespace BookLibraryAPI.Presentation.Extensions;

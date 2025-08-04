@@ -1,4 +1,4 @@
-﻿using BookLibraryAPI.Core.Domain.Entities;
+﻿using BookLibraryAPI.Core.Domain.Books;
 using BookLibraryAPI.Core.Domain.Interfaces.Repositories;
 using BookLibraryAPI.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;

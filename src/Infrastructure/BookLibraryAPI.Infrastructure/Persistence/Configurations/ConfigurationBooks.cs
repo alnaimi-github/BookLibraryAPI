@@ -1,4 +1,4 @@
-﻿using BookLibraryAPI.Core.Domain.Entities;
+﻿using BookLibraryAPI.Core.Domain.Books;
 using BookLibraryAPI.Core.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
