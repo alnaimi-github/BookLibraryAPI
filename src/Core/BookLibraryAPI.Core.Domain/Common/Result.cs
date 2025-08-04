@@ -1,4 +1,4 @@
-﻿namespace BookLibraryAPI.Application.Common.Models;
+﻿namespace BookLibraryAPI.Core.Domain.Common;
 
 public class Result<T>
 {
