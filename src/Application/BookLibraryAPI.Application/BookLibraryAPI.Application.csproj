@@ -10,4 +10,12 @@
       <ProjectReference Include="..\..\Core\BookLibraryAPI.Core.Domain\BookLibraryAPI.Core.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Features\Books\Queries\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MediatR" Version="13.0.0" />
+    </ItemGroup>
+
 </Project>
