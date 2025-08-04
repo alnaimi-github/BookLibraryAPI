@@ -1,8 +1,6 @@
 using BookLibraryAPI.Application;
 using BookLibraryAPI.Infrastructure;
-using BookLibraryAPI.Infrastructure.Persistence;
 using BookLibraryAPI.Presentation.Extensions;
-using BookLibraryAPI.Presentation.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 

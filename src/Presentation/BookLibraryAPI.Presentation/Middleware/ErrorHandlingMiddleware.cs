@@ -1,8 +1,4 @@
-﻿using System.Net;
-using System.Text.Json;
-using BookLibraryAPI.Core.Domain.Common.Exceptions;
-using FluentValidation;
-using Microsoft.AspNetCore.Mvc;
+﻿using BookLibraryAPI.Core.Domain.Common.Exceptions;
 
 namespace BookLibraryAPI.Presentation.Middleware;
 

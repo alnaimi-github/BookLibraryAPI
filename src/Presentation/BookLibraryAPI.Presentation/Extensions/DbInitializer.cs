@@ -1,6 +1,5 @@
 ﻿using BookLibraryAPI.Core.Domain.Entities;
 using BookLibraryAPI.Infrastructure.Persistence;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace BookLibraryAPI.Presentation.Extensions;
 
