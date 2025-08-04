@@ -15,6 +15,8 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+        AddAuthenticationService(services);
+        
         var connectionString = configuration.GetConnectionString("LibraryDbConnection");
         
         services.AddDbContext<LibraryDbContext>(options =>
@@ -25,9 +27,16 @@ public static class DependencyInjection
         
         services.AddScoped<IUserRepository, UserRepository>();
 
-        services.AddScoped<IAuthenticationService, AuthenticationService>();
+       
 
         return services;
+    }
+    
+    
+    private static void AddAuthenticationService(this IServiceCollection services)
+    {
+        services.AddScoped<IAuthenticationService, AuthenticationService>();
+        services.AddScoped<ITokenService, TokenService>();
     }
     
 }
