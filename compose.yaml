@@ -1,7 +1,9 @@
 ﻿services:
-  booklibraryapi.presentation:
-    image: booklibraryapi.presentation
-    build:
-      context: .
-      dockerfile: src/Presentation/BookLibraryAPI.Presentation/Dockerfile
-
+  
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: mailpit
+    ports:
+      - "8025:8025"   # Web UI
+      - "3025:1025"   # SMTP (host:container)
+    restart: unless-stopped

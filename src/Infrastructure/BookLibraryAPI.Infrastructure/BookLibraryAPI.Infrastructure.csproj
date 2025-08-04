@@ -12,10 +12,16 @@
 
     <ItemGroup>
       <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+      <PackageReference Include="MailKit" Version="4.13.0" />
       <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.10" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
+      <PackageReference Include="MimeKit" Version="4.13.0" />
       <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.10" />
       <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.13.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Adapters\" />
     </ItemGroup>
 
 </Project>

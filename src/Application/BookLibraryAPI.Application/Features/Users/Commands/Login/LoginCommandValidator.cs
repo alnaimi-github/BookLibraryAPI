@@ -1,7 +1,6 @@
-﻿using BookLibraryAPI.Application.Features.Users.Commands.Login;
-using FluentValidation;
+﻿using FluentValidation;
 
-namespace BookLibraryAPI.Application.Features.Users.Commands;
+namespace BookLibraryAPI.Application.Features.Users.Commands.Login;
 
 public class LoginCommandValidator : AbstractValidator<LoginCommand>
 {

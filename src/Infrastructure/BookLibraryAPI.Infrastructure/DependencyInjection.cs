@@ -12,7 +12,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using BookLibraryAPI.Core.Domain.Interfaces.Ports.Email;
 using BookLibraryAPI.Core.Domain.Users.Enums;
+using BookLibraryAPI.Infrastructure.Adapters.Email;
 
 namespace BookLibraryAPI.Infrastructure;
 
@@ -28,6 +30,8 @@ public static class DependencyInjection
         AddPersistence(services,configuration);
         
         AddRepositories(services);
+
+        services.AddScoped<IEmailNotificationPort, EmailNotificationPort>();
 
         return services;
     }
