@@ -73,7 +73,7 @@ public static class BookEndpoints
                 problemDetails.Detail,
                 statusCode: problemDetails.Status, title: problemDetails.Title);
         }
-        return Results.CreatedAtRoute("GetBookById", new { id = result.Value.Id }, result.Value);
+        return Results.CreatedAtRoute(nameof(GetBookByIdAsync), new { id = result.Value.Id }, result.Value);
     }
     
     private static async Task<IResult> GetAllBooksAsync(
