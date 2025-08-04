@@ -6,4 +6,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\Core\BookLibraryAPI.Core.Domain\BookLibraryAPI.Core.Domain.csproj" />
+    </ItemGroup>
+
 </Project>
