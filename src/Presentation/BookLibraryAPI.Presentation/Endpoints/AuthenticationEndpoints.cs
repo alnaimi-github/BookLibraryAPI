@@ -1,6 +1,7 @@
 ﻿using BookLibraryAPI.Application.Common.DTOs.Users;
 using BookLibraryAPI.Application.Common.Mappers.Users;
 using BookLibraryAPI.Application.Features.Users.Commands.Login;
+using BookLibraryAPI.Application.Features.Users.Commands.Register;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -22,6 +23,13 @@ public static class AuthenticationEndpoints
             .Produces<AuthenticationResultDto>(200)
             .Produces<ValidationProblemDetails>(400)
             .Produces(500);
+
+        auth.MapPost("/register", RegisterAsync)
+            .WithName("Register")
+            .WithSummary("Register a new user")
+            .Produces<AuthenticationResultDto>(200)
+            .Produces<ValidationProblemDetails>(400)
+            .Produces(500);
     }
 
     private static async Task<IResult> LoginAsync(
@@ -31,23 +39,48 @@ public static class AuthenticationEndpoints
         CancellationToken cancellationToken)
     {
         var command = request.ToCommand();
-        
         var validationResult = await validator.ValidateAsync(command, cancellationToken);
         if (!validationResult.IsValid)
         {
-            throw new ValidationException(validationResult.Errors);
+            var errors = validationResult.Errors
+                .GroupBy(e => e.PropertyName)
+                .ToDictionary(g => g.Key, g => g.Select(e => e.ErrorMessage).ToArray());
+            return Results.ValidationProblem(errors);
         }
 
         var result = await mediator.Send(command, cancellationToken);
-        
         if (!result.IsSuccess)
         {
-            var errors = new Dictionary<string, string[]> { 
-            { "Authentication", [result.Error ?? "Authentication failed"] } };
-            
-            return Results.ValidationProblem(errors, statusCode: StatusCodes.Status400BadRequest);
+            var errors = new Dictionary<string, string[]> { { "Authentication", new[] { result.Error ?? "Authentication failed" } } };
+            return Results.ValidationProblem(errors, statusCode: 400);
         }
 
-        return Results.Ok(result);
+        return Results.Ok(result.Value);
+    }
+
+    private static async Task<IResult> RegisterAsync(
+        [FromBody] RegisterDto request,
+        IMediator mediator,
+        IValidator<RegisterCommand> validator,
+        CancellationToken cancellationToken)
+    {
+        var command = request.ToCommand();
+        var validationResult = await validator.ValidateAsync(command, cancellationToken);
+        if (!validationResult.IsValid)
+        {
+            var errors = validationResult.Errors
+                .GroupBy(e => e.PropertyName)
+                .ToDictionary(g => g.Key, g => g.Select(e => e.ErrorMessage).ToArray());
+            return Results.ValidationProblem(errors);
+        }
+
+        var result = await mediator.Send(command, cancellationToken);
+        if (!result.IsSuccess)
+        {
+            var errors = new Dictionary<string, string[]> { { "Registration", new[] { result.Error ?? "Registration failed" } } };
+            return Results.ValidationProblem(errors, statusCode: 400);
+        }
+
+        return Results.Ok(result.Value);
     }
 }
