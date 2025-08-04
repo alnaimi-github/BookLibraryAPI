@@ -1,4 +1,6 @@
 ﻿using BookLibraryAPI.Core.Domain.Books;
+using BookLibraryAPI.Core.Domain.Users;
+using BookLibraryAPI.Core.Domain.Users.Enums;
 using BookLibraryAPI.Infrastructure.Persistence;
 
 namespace BookLibraryAPI.Presentation.Extensions;
@@ -9,7 +11,14 @@ public static class DbInitializer
     {
         using var scope = app.ApplicationServices.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<LibraryDbContext>();
+        var logger = scope.ServiceProvider.GetService<ILoggerFactory>()?.CreateLogger("DbInitializer");
 
+        SeedBooks(context, logger);
+        SeedUsers(context, logger);
+    }
+
+    private static void SeedBooks(LibraryDbContext context, ILogger? logger)
+    {
         if (!context.Books.Any())
         {
             var books = new[]
@@ -25,9 +34,25 @@ public static class DbInitializer
                 Book.Create("Brave New World", "Aldous Huxley", 1932),
                 Book.Create("The Picture of Dorian Gray", "Oscar Wilde", 1890)
             };
-
             context.Books.AddRange(books);
             context.SaveChanges();
+            logger?.LogInformation("Seeded initial books data.");
+        }
+    }
+
+    private static void SeedUsers(LibraryDbContext context, ILogger? logger)
+    {
+        if (!context.Users.Any())
+        {
+            var users = new[]
+            {
+                User.Create("admin", BCrypt.Net.BCrypt.HashPassword("admin123"), UserRole.Admin),
+                User.Create("moderator", BCrypt.Net.BCrypt.HashPassword("mod123"), UserRole.Moderator),
+                User.Create("user", BCrypt.Net.BCrypt.HashPassword("user123"), UserRole.User)
+            };
+            context.Users.AddRange(users);
+            context.SaveChanges();
+            logger?.LogInformation("Seeded initial users data.");
         }
     }
 }
