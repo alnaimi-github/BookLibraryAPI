@@ -17,6 +17,7 @@ using BookLibraryAPI.Core.Domain.Interfaces.Ports.Email;
 using BookLibraryAPI.Core.Domain.Users.Enums;
 using BookLibraryAPI.Infrastructure.Adapters.Email;
 using BookLibraryAPI.Infrastructure.Services.Caching;
+using StackExchange.Redis;
 
 namespace BookLibraryAPI.Infrastructure;
 
@@ -35,7 +36,7 @@ public static class DependencyInjection
 
         services.AddScoped<IEmailNotificationPort, EmailNotificationPort>();
         
-        services.AddScoped<ICacheService, RedisCacheService>();
+        AddCaching(services, configuration);
 
         return services;
     }
@@ -87,6 +88,17 @@ public static class DependencyInjection
             options.AddPolicy("ModeratorOrAdmin", policy =>
                 policy.RequireRole(nameof(UserRole.Moderator), nameof(UserRole.Admin)));
         });
+    }
+    
+    private static void AddCaching(IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddSingleton<IConnectionMultiplexer>(provider =>
+        {
+            var connectionString = configuration.GetConnectionString("Redis");
+            return ConnectionMultiplexer.Connect(connectionString!);
+        });
+    
+            services.AddSingleton<ICacheService,  RedisCacheService>();
     }
 
 }
