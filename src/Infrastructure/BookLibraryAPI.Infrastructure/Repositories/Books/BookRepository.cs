@@ -3,7 +3,7 @@ using BookLibraryAPI.Core.Domain.Interfaces.Repositories;
 using BookLibraryAPI.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
-namespace BookLibraryAPI.Infrastructure.Repositories;
+namespace BookLibraryAPI.Infrastructure.Repositories.Books;
 
 internal sealed class BookRepository(LibraryDbContext context) : IBookRepository
 {

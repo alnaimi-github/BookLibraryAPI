@@ -1,6 +1,7 @@
 ﻿using BookLibraryAPI.Core.Domain.Interfaces.Repositories;
 using BookLibraryAPI.Infrastructure.Persistence;
 using BookLibraryAPI.Infrastructure.Repositories;
+using BookLibraryAPI.Infrastructure.Repositories.Books;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
