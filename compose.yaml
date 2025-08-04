@@ -1,0 +1,7 @@
+﻿services:
+  booklibraryapi.presentation:
+    image: booklibraryapi.presentation
+    build:
+      context: .
+      dockerfile: src/Presentation/BookLibraryAPI.Presentation/Dockerfile
+
