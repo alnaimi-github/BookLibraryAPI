@@ -9,6 +9,8 @@ public sealed class Book : BaseEntity
     public BookAuthor Author { get; private set; }
     public int Year { get; private set; }
     
+    private Book() { } // EF Core requires a parameterless constructor
+    
     public static Book Create(string title, string author, int year)
     {
         return new Book
