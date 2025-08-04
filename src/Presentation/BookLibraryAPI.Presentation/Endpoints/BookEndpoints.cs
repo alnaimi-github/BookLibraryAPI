@@ -41,7 +41,8 @@ public static class BookEndpoints
             .WithDescription("Retrieve a single book by its ID.")
             .Produces<BookDto>(200)
             .Produces(404)
-            .Produces(500);
+            .Produces(500)
+            .WithName("GetBookById");
     }
 
     private static async Task<IResult> CreateBookAsync(
