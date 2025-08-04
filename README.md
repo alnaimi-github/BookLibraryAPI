@@ -158,7 +158,10 @@ services:
 - When a new book is created, management must be notified by email.
   - This is a business requirement, not just a technical improvement.
   - The email notification logic is implemented in the Application Layer (specifically, in the CreateBookCommandHandler) and is triggered after a book is successfully added.
-  - This ensures the business rule is enforced as part of the use case logic, following Clean Architecture best practices.
+  - This ensures the business rule is enforced as part of the use case logic.
+
+<img width="1858" height="790" alt="image" src="https://github.com/user-attachments/assets/20484ea9-27ec-4f7b-a3f5-1abb74578b16" />
+
 
 ## Architecture
 
@@ -174,6 +177,9 @@ This separation ensures:
 - Business logic is isolated and testable.
 - Infrastructure and frameworks can be swapped with minimal impact.
 - The system is maintainable, extensible, and follows Clean Architecture best practices.
+
+  <img width="1024" height="1024" alt="ChatGPT Image 5 أغسطس 2025، 02_22_53 ص" src="https://github.com/user-attachments/assets/db05c759-64ed-4cd7-aa4f-97a4e697a9f8" />
+
 
 ## Extending the System
 - Add new features in the Application layer (commands, queries, handlers).
