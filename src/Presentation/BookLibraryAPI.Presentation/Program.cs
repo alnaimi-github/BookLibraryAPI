@@ -5,8 +5,7 @@ using BookLibraryAPI.Presentation.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerWithJwtAuth();
 
 builder.Services
     .AddApplication()
