@@ -48,7 +48,7 @@ public static class DependencyInjection
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.Key)),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions!.Key)),
                     ValidateIssuer = true,
                     ValidIssuer = jwtOptions.Issuer,
                     ValidateAudience = true,
