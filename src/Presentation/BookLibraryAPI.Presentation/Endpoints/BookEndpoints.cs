@@ -26,7 +26,8 @@ public static class BookEndpoints
             .Produces(401)
             .Produces(403)
             .Produces(500)
-            .WithName("CreateBook");
+            .WithName("CreateBook")
+            .RequireAuthorization("ModeratorOrAdmin");
 
         books.MapGet("/", GetAllBooksAsync)
             .WithName("GetAllBooks")

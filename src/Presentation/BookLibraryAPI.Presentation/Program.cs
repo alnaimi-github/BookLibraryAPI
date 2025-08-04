@@ -26,6 +26,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseCustomExceptionHandler();
 
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.MapBookEndpoints();
 app.MapAuthenticationEndpoints();
 
