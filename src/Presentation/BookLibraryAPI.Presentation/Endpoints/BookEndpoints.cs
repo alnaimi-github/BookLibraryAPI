@@ -25,7 +25,8 @@ public static class BookEndpoints
             .Produces<ValidationProblemDetails>(400)
             .Produces(401)
             .Produces(403)
-            .Produces(500);
+            .Produces(500)
+            .WithName("CreateBook");
 
         books.MapGet("/", GetAllBooksAsync)
             .WithName("GetAllBooks")
@@ -33,7 +34,8 @@ public static class BookEndpoints
             .WithDescription("Retrieve all books from the library (requires authentication)")
             .Produces<IEnumerable<BookDto>>(200)
             .Produces(401)
-            .Produces(500);
+            .Produces(500)
+            .WithName("GetAllBooks");
 
         books.MapGet("/{id:int}", GetBookByIdAsync)
             .WithName("GetBookById")
@@ -74,7 +76,7 @@ public static class BookEndpoints
                 problemDetails.Detail,
                 statusCode: problemDetails.Status, title: problemDetails.Title);
         }
-        return Results.CreatedAtRoute(nameof(GetBookByIdAsync), new { id = result.Value.Id }, result.Value);
+        return Results.CreatedAtRoute("GetBookById", new { id = result.Value.Id }, result.Value);
     }
     
     private static async Task<IResult> GetAllBooksAsync(
