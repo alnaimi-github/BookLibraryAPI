@@ -3,7 +3,7 @@ using BookLibraryAPI.Core.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace BookLibraryAPI.Infrastructure.Persistence.Configurations;
+namespace BookLibraryAPI.Infrastructure.Persistence.Configurations.Books;
 
 public sealed class ConfigurationBooks : IEntityTypeConfiguration<Book>
 {
