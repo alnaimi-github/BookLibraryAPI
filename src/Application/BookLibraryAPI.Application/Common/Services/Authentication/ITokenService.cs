@@ -1,7 +1,7 @@
 ﻿using BookLibraryAPI.Core.Domain.Common;
 using BookLibraryAPI.Core.Domain.Users;
 
-namespace BookLibraryAPI.Application.Common.Authentication;
+namespace BookLibraryAPI.Application.Common.Services.Authentication;
 
 public interface ITokenService
 {
