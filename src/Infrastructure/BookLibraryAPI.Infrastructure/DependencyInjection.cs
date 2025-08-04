@@ -2,6 +2,7 @@
 using BookLibraryAPI.Infrastructure.Persistence;
 using BookLibraryAPI.Infrastructure.Repositories;
 using BookLibraryAPI.Infrastructure.Repositories.Books;
+using BookLibraryAPI.Infrastructure.Repositories.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +20,8 @@ public static class DependencyInjection
                 npgsqlOptions.MigrationsAssembly(typeof(LibraryDbContext).Assembly.FullName)));
         
         services.AddScoped<IBookRepository, BookRepository>();
+        
+        services.AddScoped<IUserRepository, UserRepository>();
 
         return services;
     }
