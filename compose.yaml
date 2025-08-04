@@ -7,3 +7,10 @@
       - "8025:8025"   # Web UI
       - "3025:1025"   # SMTP (host:container)
     restart: unless-stopped
+    
+  book-lib-redis:
+    image: redis:latest
+    container_name: BookLibrary.Redis
+    restart: always
+    ports:
+      - "6379:6379"
