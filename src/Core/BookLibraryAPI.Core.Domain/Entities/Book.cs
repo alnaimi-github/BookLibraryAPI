@@ -17,4 +17,11 @@ public sealed class Book : BaseEntity
             Year = year
         };
     }
+    public void Update(string title, string author, int year)
+    {
+        Title = title.Trim();
+        Author = author.Trim();
+        Year = year;
+        SetUpdatedAt();
+    }
 }
