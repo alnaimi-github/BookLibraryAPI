@@ -1,4 +1,4 @@
-﻿using BookLibraryAPI.Core.Domain.Exceptions;
+﻿using BookLibraryAPI.Core.Domain.Common.Exceptions;
 
 namespace BookLibraryAPI.Core.Domain.ValueObjects;
 

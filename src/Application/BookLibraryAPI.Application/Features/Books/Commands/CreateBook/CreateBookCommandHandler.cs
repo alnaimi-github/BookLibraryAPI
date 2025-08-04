@@ -1,7 +1,6 @@
 ﻿using BookLibraryAPI.Application.Common.DTOs.Books;
 using BookLibraryAPI.Core.Domain.Common;
 using BookLibraryAPI.Core.Domain.Entities;
-using BookLibraryAPI.Core.Domain.Exceptions;
 using BookLibraryAPI.Core.Domain.Interfaces.Repositories;
 using MediatR;
 using Microsoft.Extensions.Logging;
