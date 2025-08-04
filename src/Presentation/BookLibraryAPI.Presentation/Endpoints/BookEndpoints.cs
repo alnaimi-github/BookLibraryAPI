@@ -35,7 +35,8 @@ public static class BookEndpoints
             .Produces<IEnumerable<BookDto>>(200)
             .Produces(401)
             .Produces(500)
-            .WithName("GetAllBooks");
+            .WithName("GetAllBooks")
+            .RequireAuthorization();
 
         books.MapGet("/{id:int}", GetBookByIdAsync)
             .WithName("GetBookById")
@@ -44,7 +45,8 @@ public static class BookEndpoints
             .Produces<BookDto>(200)
             .Produces(404)
             .Produces(500)
-            .WithName("GetBookById");
+            .WithName("GetBookById")
+            .RequireAuthorization();
     }
 
     private static async Task<IResult> CreateBookAsync(

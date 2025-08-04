@@ -12,32 +12,28 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using BookLibraryAPI.Core.Domain.Users.Enums;
 
 namespace BookLibraryAPI.Infrastructure;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services, 
+        IConfiguration configuration)
     {
-        AddAuthenticationService(services, configuration);
-        
-        var connectionString = configuration.GetConnectionString("LibraryDbConnection");
-        
-        services.AddDbContext<LibraryDbContext>(options =>
-            options.UseNpgsql(connectionString, npgsqlOptions =>
-                npgsqlOptions.MigrationsAssembly(typeof(LibraryDbContext).Assembly.FullName)));
-        
-        services.AddScoped<IBookRepository, BookRepository>();
-        
-        services.AddScoped<IUserRepository, UserRepository>();
+        AddAuthentication(services, configuration);
 
-       
+        AddAuthorization(services);
+        
+        AddPersistence(services,configuration);
+        
+        AddRepositories(services);
 
         return services;
     }
     
     
-    private static void AddAuthenticationService(this IServiceCollection services, IConfiguration configuration)
+    private static void AddAuthentication(IServiceCollection services, IConfiguration configuration)
     {
         services.Configure<JwtOptions>(configuration.GetSection("Jwt"));
         var jwtOptions = configuration.GetSection("Jwt").Get<JwtOptions>();
@@ -62,4 +58,27 @@ public static class DependencyInjection
         services.AddScoped<ITokenService, TokenService>();
     }
     
+    private static void AddRepositories(IServiceCollection services)
+    {
+        services.AddScoped<IBookRepository, BookRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
+    }
+    
+    private static void AddPersistence( IServiceCollection services, IConfiguration configuration)
+    {
+        var connectionString = configuration.GetConnectionString("LibraryDbConnection");
+        
+        services.AddDbContext<LibraryDbContext>(options =>
+            options.UseNpgsql(connectionString, npgsqlOptions =>
+                npgsqlOptions.MigrationsAssembly(typeof(LibraryDbContext).Assembly.FullName)));
+    }
+    private static void AddAuthorization(IServiceCollection services)
+    {
+        services.AddAuthorization(options =>
+        {
+            options.AddPolicy("ModeratorOrAdmin", policy =>
+                policy.RequireRole(nameof(UserRole.Moderator), nameof(UserRole.Admin)));
+        });
+    }
+
 }
