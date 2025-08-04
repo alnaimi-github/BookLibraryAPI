@@ -1,9 +1,9 @@
 ﻿using BookLibraryAPI.Application.Common.DTOs.Books;
+using BookLibraryAPI.Application.Common.Mappers.Books;
 using BookLibraryAPI.Core.Domain.Common;
 using BookLibraryAPI.Core.Domain.Entities;
 using BookLibraryAPI.Core.Domain.Interfaces.Repositories;
 using MediatR;
-using Microsoft.Extensions.Logging;
 
 namespace BookLibraryAPI.Application.Features.Books.Commands.CreateBook;
 
@@ -21,12 +21,8 @@ public class CreateBookCommandHandler(IBookRepository bookRepository)
             return Result<BookDto>.Failure(Error.NullValue.Name);
         }
        
-        var dto = new BookDto(
-            createdBook.Id,
-            createdBook.Title.Value,
-            createdBook.Author.Value,
-            createdBook.Year,
-            createdBook.CreatedAt);
+        var dto = createdBook.ToDto();
+        
         return Result<BookDto>.Success(dto);
     }
 }
