@@ -1,5 +1,6 @@
 using BookLibraryAPI.Application;
 using BookLibraryAPI.Infrastructure;
+using BookLibraryAPI.Presentation.Endpoints;
 using BookLibraryAPI.Presentation.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,5 +25,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCustomExceptionHandler();
+
+app.MapBookEndpoints();
 
 app.Run();

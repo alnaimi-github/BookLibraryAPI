@@ -1,6 +1,8 @@
 ﻿using BookLibraryAPI.Application.Common.DTOs.Books;
 using BookLibraryAPI.Application.Common.Mappers.Books;
 using BookLibraryAPI.Application.Features.Books.Commands.CreateBook;
+using BookLibraryAPI.Application.Features.Books.Queries.GetAllBooks;
+using BookLibraryAPI.Application.Features.Books.Queries.GetBookById;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -23,6 +25,22 @@ public static class BookEndpoints
             .Produces<ValidationProblemDetails>(400)
             .Produces(401)
             .Produces(403)
+            .Produces(500);
+
+        books.MapGet("/", GetAllBooksAsync)
+            .WithName("GetAllBooks")
+            .WithSummary("Get all books")
+            .WithDescription("Retrieve all books from the library (requires authentication)")
+            .Produces<IEnumerable<BookDto>>(200)
+            .Produces(401)
+            .Produces(500);
+
+        books.MapGet("/{id:int}", GetBookByIdAsync)
+            .WithName("GetBookById")
+            .WithSummary("Get a book by ID")
+            .WithDescription("Retrieve a single book by its ID.")
+            .Produces<BookDto>(200)
+            .Produces(404)
             .Produces(500);
     }
 
@@ -55,6 +73,50 @@ public static class BookEndpoints
                 problemDetails.Detail,
                 statusCode: problemDetails.Status, title: problemDetails.Title);
         }
-        return Results.CreatedAtRoute($"/api/books/{result.Value.Id}", result.Value);
+        return Results.CreatedAtRoute("GetBookById", new { id = result.Value.Id }, result.Value);
+    }
+    
+    private static async Task<IResult> GetAllBooksAsync(
+        IMediator mediator,
+        CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(new GetAllBooksQuery(), cancellationToken);
+        
+        if ( !result.IsSuccess || result.Value == null || !result.Value.Any())
+        {
+            var problemDetails = new ProblemDetails
+            {
+                Title = "No books found",
+                Detail = result.Error,
+                Status = StatusCodes.Status404NotFound
+            };
+            return Results.Problem(
+                problemDetails.Detail, 
+                statusCode: problemDetails.Status, 
+                title: problemDetails.Title);
+        }
+        return Results.Ok(result.Value);
+    }
+
+    private static async Task<IResult> GetBookByIdAsync(
+        int id,
+        IMediator mediator,
+        CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(new GetBookByIdQuery(id), cancellationToken);
+        if (!result.IsSuccess || result.Value == null)
+        {
+            var problemDetails = new ProblemDetails
+            {
+                Title = "Book not found",
+                Detail = result.Error,
+                Status = StatusCodes.Status404NotFound
+            };
+            return Results.Problem(
+                problemDetails.Detail,
+                statusCode: problemDetails.Status,
+                title: problemDetails.Title);
+        }
+        return Results.Ok(result.Value);
     }
 }
