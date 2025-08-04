@@ -22,14 +22,19 @@ public static class AuthenticationEndpoints
             .WithDescription("Authenticate with username and password to receive a JWT token")
             .Produces<AuthenticationResultDto>(200)
             .Produces<ValidationProblemDetails>(400)
-            .Produces(500);
+            .Produces(500)
+            .WithName("Login")
+            .AllowAnonymous();
 
         auth.MapPost("/register", RegisterAsync)
             .WithName("Register")
             .WithSummary("Register a new user")
             .Produces<AuthenticationResultDto>(200)
             .Produces<ValidationProblemDetails>(400)
-            .Produces(500);
+            .Produces(500)
+            .WithDescription("Register a new user with username, password, and role (Admin or User or Moderator)")
+            .WithName("Register")
+            .AllowAnonymous();
     }
 
     private static async Task<IResult> LoginAsync(
