@@ -23,6 +23,16 @@ BookLibraryAPI is a modular, layered .NET 8 Web API for managing a library of bo
    - Custom middleware returns errors as ProblemDetails for consistent API responses.
 8. **PostgreSQL & EF Core**
    - PostgreSQL is used as the database, with EF Core for data access and migrations.
+9. **Caching**
+   - Book list queries are cached for performance using a cache service (`ICacheService`).
+   - The cache is automatically invalidated after creating or updating a book to ensure fresh data.
+   - Caching is implemented in the Application layer (handlers) and the actual cache provider is implemented in the Infrastructure layer.
+   - Main files:
+     - `src/Application/BookLibraryAPI.Application/Common/Services/Caching/ICacheService.cs` (interface)
+     - `src/Application/BookLibraryAPI.Application/Features/Books/Queries/GetAllBooks/GetAllBooksQueryHandler.cs` (cache usage)
+     - `src/Application/BookLibraryAPI.Application/Features/Books/Commands/CreateBook/CreateBookCommandHandler.cs` (cache invalidation)
+     - `src/Application/BookLibraryAPI.Application/Features/Books/Commands/UpdateBook/UpdateBookCommandHandler.cs` (cache invalidation)
+     - `src/Infrastructure/BookLibraryAPI.Infrastructure/Services/Caching/` (implementation)
 
 ## Features
 - **Books CRUD**: Create, read, update, and list books with validation and error handling.
@@ -105,8 +115,11 @@ BookLibraryAPI/
 │   │       │   │   ├── Books/
 │   │       │   │   └── Users/
 │   │       │   └── Mappers/
+│   │       ├── Services/
+│   │       │   ├── Authentication/
+│   │       │   └── Caching/
 │   │       ├── Features/
-��   │       │   ├── Books/
+│   │       │   ├── Books/
 │   │       │   └── Users/
 │   │       └── DependencyInjection.cs
 │   ├── Core/
@@ -129,6 +142,8 @@ BookLibraryAPI/
 │   │       │   └── Migrations/
 │   │       ├── Repositories/
 │   │       ├── Services/
+│   │       │   ├── Authentication/
+│   │       │   └── Caching/
 │   │       └── Settings/
 │   │       └── DependencyInjection.cs
 │   └── Presentation/
