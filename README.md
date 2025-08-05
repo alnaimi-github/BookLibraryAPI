@@ -26,6 +26,9 @@ BookLibraryAPI is a modular, layered .NET 8 Web API for managing a library of bo
 9. **Caching**
    - Book list queries are cached for performance using a cache service (`ICacheService`).
    - The cache is automatically invalidated after creating or updating a book to ensure fresh data.
+   - 
+     <img width="1857" height="587" alt="image" src="https://github.com/user-attachments/assets/6963661f-c350-4f73-8160-3a21834feb92" />
+
    - Caching is implemented in the Application layer (handlers) and the actual cache provider is implemented in the Infrastructure layer.
    - Main files:
      - `src/Application/BookLibraryAPI.Application/Common/Services/Caching/ICacheService.cs` (interface)
