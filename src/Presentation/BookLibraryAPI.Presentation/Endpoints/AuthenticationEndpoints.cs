@@ -40,18 +40,9 @@ public static class AuthenticationEndpoints
     private static async Task<IResult> LoginAsync(
         [FromBody] LoginDto request,
         IMediator mediator,
-        IValidator<LoginCommand> validator,
         CancellationToken cancellationToken)
     {
         var command = request.ToCommand();
-        var validationResult = await validator.ValidateAsync(command, cancellationToken);
-        if (!validationResult.IsValid)
-        {
-            var errors = validationResult.Errors
-                .GroupBy(e => e.PropertyName)
-                .ToDictionary(g => g.Key, g => g.Select(e => e.ErrorMessage).ToArray());
-            return Results.ValidationProblem(errors);
-        }
 
         var result = await mediator.Send(command, cancellationToken);
         if (!result.IsSuccess)
@@ -66,19 +57,10 @@ public static class AuthenticationEndpoints
     private static async Task<IResult> RegisterAsync(
         [FromBody] RegisterDto request,
         IMediator mediator,
-        IValidator<RegisterCommand> validator,
         CancellationToken cancellationToken)
     {
         var command = request.ToCommand();
-        var validationResult = await validator.ValidateAsync(command, cancellationToken);
-        if (!validationResult.IsValid)
-        {
-            var errors = validationResult.Errors
-                .GroupBy(e => e.PropertyName)
-                .ToDictionary(g => g.Key, g => g.Select(e => e.ErrorMessage).ToArray());
-            return Results.ValidationProblem(errors);
-        }
-
+        
         var result = await mediator.Send(command, cancellationToken);
         if (!result.IsSuccess)
         {

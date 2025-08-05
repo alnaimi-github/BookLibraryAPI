@@ -66,18 +66,9 @@ public static class BookEndpoints
     private static async Task<IResult> CreateBookAsync(
         [FromBody] CreateBookDto request,
         IMediator mediator,
-        IValidator<CreateBookCommand> validator,
         CancellationToken cancellationToken)
     {
         var command = request.ToCommand();
-        var validationResult = await validator.ValidateAsync(command, cancellationToken);
-        if (!validationResult.IsValid)
-        {
-            var errors = validationResult.Errors
-                .GroupBy(e => e.PropertyName)
-                .ToDictionary(g => g.Key, g => g.Select(e => e.ErrorMessage).ToArray());
-            return Results.ValidationProblem(errors);
-        }
 
         var result = await mediator.Send(command, cancellationToken);
         if (!result.IsSuccess || result.Value == null)
@@ -143,23 +134,10 @@ public static class BookEndpoints
         int id,
         [FromBody] UpdateBookDto request,
         IMediator mediator,
-        IValidator<UpdateBookCommand> validator,
         CancellationToken cancellationToken)
     {
-        if (id != request.Id)
-        {
-            var errors = new Dictionary<string, string[]> { { "Id", new[] { "Route id and body id must match." } } };
-            return Results.ValidationProblem(errors, statusCode: 400);
-        }
         var command = request.ToCommand();
-        var validationResult = await validator.ValidateAsync(command, cancellationToken);
-        if (!validationResult.IsValid)
-        {
-            var errors = validationResult.Errors
-                .GroupBy(e => e.PropertyName)
-                .ToDictionary(g => g.Key, g => g.Select(e => e.ErrorMessage).ToArray());
-            return Results.ValidationProblem(errors);
-        }
+        
         var result = await mediator.Send(command, cancellationToken);
         if (!result.IsSuccess)
         {
