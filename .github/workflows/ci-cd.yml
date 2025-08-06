@@ -74,4 +74,4 @@ jobs:
           tags: abdulwaisa/booklibraryapi:latest
       - name: Deploy with Docker Compose
         run: |
-          docker compose -f compose.yaml up -d
+          docker compose -f docker-compose.example.yaml up -d
