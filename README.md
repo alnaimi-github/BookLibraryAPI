@@ -232,9 +232,16 @@ MIT
 ## How to Check if the Application is Running
 
 ### Locally (Docker)
+
+<img width="1546" height="348" alt="image" src="https://github.com/user-attachments/assets/e2e4b0e7-d022-4086-9942-535eb47569ac" />
+
+<img width="1466" height="326" alt="image" src="https://github.com/user-attachments/assets/a330d555-b852-4fef-a88e-f02266e83246" />
+<img width="1800" height="865" alt="image" src="https://github.com/user-attachments/assets/9ecae788-dcb9-4698-b9c6-28330866e221" />
+
+
 1. Run:
    ```sh
-   docker compose up -d
+   docker compose up -d or docker pull abdulwaisa/booklibraryapi
    ```
 2. Visit:
    - API: `https://localhost:9443/swagger`
@@ -252,6 +259,8 @@ MIT
 
 ## Testing
 
+<img width="971" height="860" alt="image" src="https://github.com/user-attachments/assets/70dcf8fb-92e9-44fd-bd00-9a62cee1fe59" />
+
 The project includes comprehensive unit and integration tests:
 
 - **Unit Tests:** Located in `tests/BookLibraryAPI.UnitTests`. Run with:
@@ -265,3 +274,16 @@ The project includes comprehensive unit and integration tests:
 - **CI/CD:** All tests are automatically run in GitHub Actions on every push and pull request to `main`. Test results are uploaded as artifacts.
 
 You can view test results in the GitHub Actions tab or by running the above commands locally.
+
+## 🧪 Test User Accounts
+
+You can use the following predefined users to log in during development/testing:
+
+| Role       | Username   | Password   |
+|------------|------------|------------|
+| Admin      | `admin`    | `admin123` |
+| Moderator  | `moderator`| `mod123`   |
+| User       | `user`     | `user123`  |
+
+🔐 **Note:** Passwords are hashed using BCrypt at runtime. The plain-text versions above are only for testing purposes.
+
