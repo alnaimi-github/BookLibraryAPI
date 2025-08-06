@@ -1,6 +1,6 @@
-﻿namespace BookLibraryAPI.Application.Common.Services.Caching;
+﻿namespace BookLibraryAPI.Core.Domain.Interfaces.Ports.Caching;
 
-public interface ICacheService
+public interface ICachePort
 {
     Task<T?> GetAsync<T>(string key, CancellationToken cancellationToken = default) where T : class;
     

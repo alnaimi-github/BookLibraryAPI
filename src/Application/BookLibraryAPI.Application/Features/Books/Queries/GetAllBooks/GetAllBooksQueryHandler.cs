@@ -1,7 +1,7 @@
 ﻿using BookLibraryAPI.Application.Common.DTOs.Books;
 using BookLibraryAPI.Application.Common.Mappers.Books;
-using BookLibraryAPI.Application.Common.Services.Caching;
 using BookLibraryAPI.Core.Domain.Common;
+using BookLibraryAPI.Core.Domain.Interfaces.Ports.Caching;
 using BookLibraryAPI.Core.Domain.Interfaces.Repositories;
 using MediatR;
 
@@ -9,7 +9,7 @@ namespace BookLibraryAPI.Application.Features.Books.Queries.GetAllBooks;
 
 public class GetAllBooksQueryHandler(
     IBookRepository bookRepository,
-    ICacheService cacheService)
+    ICachePort cachePort)
     : IRequestHandler<GetAllBooksQuery, Result<IEnumerable<BookDto>>>
 {
     public async Task<Result<IEnumerable<BookDto>>> Handle(
@@ -17,7 +17,7 @@ public class GetAllBooksQueryHandler(
         CancellationToken cancellationToken)
     {
         const string cacheKey = "books:all";
-        var cached = await cacheService.GetAsync<IEnumerable<BookDto>>(cacheKey, cancellationToken);
+        var cached = await cachePort.GetAsync<IEnumerable<BookDto>>(cacheKey, cancellationToken);
         
         if (cached is not null)
         {
@@ -31,7 +31,7 @@ public class GetAllBooksQueryHandler(
         }
         var dtos = books.ToDtoList();
         
-        await cacheService.SetAsync(cacheKey, dtos, TimeSpan.FromMinutes(10), cancellationToken);
+        await cachePort.SetAsync(cacheKey, dtos, TimeSpan.FromMinutes(10), cancellationToken);
         
         return Result<IEnumerable<BookDto>>.Success(dtos);
     }

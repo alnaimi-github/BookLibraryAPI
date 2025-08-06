@@ -1,12 +1,12 @@
-﻿using BookLibraryAPI.Application.Common.Services.Caching;
-using BookLibraryAPI.Core.Domain.Common;
+﻿using BookLibraryAPI.Core.Domain.Common;
+using BookLibraryAPI.Core.Domain.Interfaces.Ports.Caching;
 using BookLibraryAPI.Core.Domain.Interfaces.Repositories;
 using BookLibraryAPI.Core.Domain.ValueObjects;
 using MediatR;
 
 namespace BookLibraryAPI.Application.Features.Books.Commands.UpdateBook;
 
-public class UpdateBookCommandHandler(IBookRepository bookRepository, ICacheService cacheService) : IRequestHandler<UpdateBookCommand, Result<bool>>
+public class UpdateBookCommandHandler(IBookRepository bookRepository, ICachePort cachePort) : IRequestHandler<UpdateBookCommand, Result<bool>>
 {
     public async Task<Result<bool>> Handle(UpdateBookCommand request, CancellationToken cancellationToken)
     {
@@ -19,7 +19,7 @@ public class UpdateBookCommandHandler(IBookRepository bookRepository, ICacheServ
         book.Update(request.Title, request.Author, request.Year);
         await bookRepository.UpdateAsync(book, cancellationToken);
        
-        await cacheService.RemoveAsync("books:all", cancellationToken);
+        await cachePort.RemoveAsync("books:all", cancellationToken);
         return Result<bool>.Success(true);
     }
 }

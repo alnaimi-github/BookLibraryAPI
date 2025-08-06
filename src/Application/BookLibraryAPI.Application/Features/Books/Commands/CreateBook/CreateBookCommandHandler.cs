@@ -1,8 +1,8 @@
 ﻿using BookLibraryAPI.Application.Common.DTOs.Books;
 using BookLibraryAPI.Application.Common.Mappers.Books;
-using BookLibraryAPI.Application.Common.Services.Caching;
 using BookLibraryAPI.Core.Domain.Books;
 using BookLibraryAPI.Core.Domain.Common;
+using BookLibraryAPI.Core.Domain.Interfaces.Ports.Caching;
 using BookLibraryAPI.Core.Domain.Interfaces.Ports.Email;
 using BookLibraryAPI.Core.Domain.Interfaces.Repositories;
 using MediatR;
@@ -12,7 +12,7 @@ namespace BookLibraryAPI.Application.Features.Books.Commands.CreateBook;
 public class CreateBookCommandHandler(
     IBookRepository bookRepository,
     IEmailNotificationPort emailNotificationPort,
-    ICacheService cacheService)
+    ICachePort cachePort)
     : IRequestHandler<CreateBookCommand, Result<BookDto>>
 {
     public async Task<Result<BookDto>> Handle(CreateBookCommand request, CancellationToken cancellationToken)
@@ -26,7 +26,7 @@ public class CreateBookCommandHandler(
             return Result<BookDto>.Failure(Error.NullValue.Name);
         }
         
-        await cacheService.RemoveAsync("books:all", cancellationToken);
+        await cachePort.RemoveAsync("books:all", cancellationToken);
         
         await emailNotificationPort.SendWelcomeEmailAsync(
             book.Title.Value,

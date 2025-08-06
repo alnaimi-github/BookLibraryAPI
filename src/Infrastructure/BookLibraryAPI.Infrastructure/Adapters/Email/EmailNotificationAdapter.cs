@@ -6,9 +6,9 @@ using MimeKit;
 
 namespace BookLibraryAPI.Infrastructure.Adapters.Email;
 
-public class EmailNotificationPort(
+public class EmailNotificationAdapter(
     IConfiguration configuration, 
-    ILogger<EmailNotificationPort> logger) 
+    ILogger<EmailNotificationAdapter> logger) 
     : IEmailNotificationPort
 {
     public async Task SendWelcomeEmailAsync(string bookTitle, string author,

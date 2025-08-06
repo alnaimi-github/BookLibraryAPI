@@ -12,11 +12,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using BookLibraryAPI.Application.Common.Services.Caching;
+using BookLibraryAPI.Core.Domain.Interfaces.Ports.Caching;
 using BookLibraryAPI.Core.Domain.Interfaces.Ports.Email;
 using BookLibraryAPI.Core.Domain.Users.Enums;
+using BookLibraryAPI.Infrastructure.Adapters.Caching;
 using BookLibraryAPI.Infrastructure.Adapters.Email;
-using BookLibraryAPI.Infrastructure.Services.Caching;
 using StackExchange.Redis;
 
 namespace BookLibraryAPI.Infrastructure;
@@ -34,7 +34,7 @@ public static class DependencyInjection
         
         AddRepositories(services);
 
-        services.AddScoped<IEmailNotificationPort, EmailNotificationPort>();
+        services.AddScoped<IEmailNotificationPort, EmailNotificationAdapter>();
         
         AddCaching(services, configuration);
 
@@ -98,7 +98,7 @@ public static class DependencyInjection
             return ConnectionMultiplexer.Connect(connectionString!);
         });
     
-            services.AddSingleton<ICacheService,  RedisCacheService>();
+            services.AddSingleton<ICachePort,  RedisCacheAdapter>();
     }
 
 }

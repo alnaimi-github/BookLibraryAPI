@@ -1,12 +1,12 @@
 ﻿using System.Text.Json;
-using BookLibraryAPI.Application.Common.Services.Caching;
+using BookLibraryAPI.Core.Domain.Interfaces.Ports.Caching;
 using Microsoft.Extensions.Logging;
 using StackExchange.Redis;
 
-namespace BookLibraryAPI.Infrastructure.Services.Caching;
+namespace BookLibraryAPI.Infrastructure.Adapters.Caching;
 
-public class RedisCacheService(IConnectionMultiplexer redis, ILogger<RedisCacheService> logger)
-    : ICacheService
+public class RedisCacheAdapter(IConnectionMultiplexer redis, ILogger<RedisCacheAdapter> logger)
+    : ICachePort
 {
     private readonly IDatabase _database = redis.GetDatabase();
 
