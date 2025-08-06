@@ -120,7 +120,7 @@ BookLibraryAPI/
 │   │       │   └── Mappers/
 │   │       ├── Services/
 │   │       │   ├── Authentication/
-│   │       │   └── Caching/
+│   │   
 │   │       ├── Features/
 │   │       │   ├── Books/
 │   │       │   └── Users/
@@ -140,13 +140,14 @@ BookLibraryAPI/
 │   │   └── BookLibraryAPI.Infrastructure/
 │   │       ├── Adapters/
 │   │       │   └── Email/
+                └── Caching/
 │   │       ├── Persistence/
 │   │       │   ├── Configurations/
 │   │       │   └── Migrations/
 │   │       ├── Repositories/
 │   │       ├── Services/
 │   │       │   ├── Authentication/
-│   │       │   └── Caching/
+│   │      
 │   │       └── Settings/
 │   │       └── DependencyInjection.cs
 │   └── Presentation/
