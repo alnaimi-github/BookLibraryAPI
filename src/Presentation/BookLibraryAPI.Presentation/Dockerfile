@@ -3,8 +3,13 @@ WORKDIR /app
 EXPOSE 8080
 EXPOSE 9443
 
+
 # Copy dev certificate
 COPY ./src/Presentation/BookLibraryAPI.Presentation/aspnet-dev-cert.pfx /https/aspnet-dev-cert.pfx
+
+# Copy wait-for-postgres script
+COPY ../../wait-for-postgres.sh /app/wait-for-postgres.sh
+RUN chmod +x /app/wait-for-postgres.sh
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
@@ -22,4 +27,4 @@ RUN dotnet publish "./BookLibraryAPI.Presentation.csproj" -c $BUILD_CONFIGURATIO
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "BookLibraryAPI.Presentation.dll"]
+ENTRYPOINT ["/bin/sh", "-c", "/app/wait-for-postgres.sh dotnet BookLibraryAPI.Presentation.dll"]
