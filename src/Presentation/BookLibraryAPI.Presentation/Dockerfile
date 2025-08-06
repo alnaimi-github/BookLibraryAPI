@@ -7,6 +7,7 @@ EXPOSE 9443
 # Copy dev certificate
 COPY ./src/Presentation/BookLibraryAPI.Presentation/aspnet-dev-cert.pfx /https/aspnet-dev-cert.pfx
 
+RUN apt-get update && apt-get install -y postgresql-client redis-tools curl
 # Copy wait-for-postgres script
 COPY ../../wait-for-postgres.sh /app/wait-for-postgres.sh
 RUN chmod +x /app/wait-for-postgres.sh
