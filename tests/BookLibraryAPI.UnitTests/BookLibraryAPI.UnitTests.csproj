@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Core\BookLibraryAPI.Core.Domain\BookLibraryAPI.Core.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Application\BookLibraryAPI.Application\BookLibraryAPI.Application.csproj" />
   </ItemGroup>
 
 </Project>
