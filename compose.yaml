@@ -1,5 +1,57 @@
-﻿services:
-  
+﻿version: '3.8'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: src/Presentation/BookLibraryAPI.Presentation/Dockerfile
+    container_name: booklibraryapi_app
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__LibraryDbConnection=Host=book-lib-postgres;Port=5432;Database=librarydb;Username=postgres;Password=postgres
+      - ConnectionStrings__Redis=book-lib-redis:6379
+      - Email__SmtpHost=mailpit
+      - Email__SmtpPort=1025
+      - Email__From=admin@example.com
+      - ASPNETCORE_URLS=https://+:9443;http://+:8080
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=Password123!
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnet-dev-cert.pfx
+    ports:
+      - "8080:8080"
+      - "9443:9443"
+    depends_on:
+      - book-lib-postgres
+      - book-lib-redis
+      - mailpit
+    restart: unless-stopped
+
+  book-lib-postgres:
+    image: postgres:15.1
+    container_name: BookLibrary.Postgres
+    environment:
+      POSTGRES_DB: librarydb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  book-lib-redis:
+    image: redis:7.0
+    container_name: BookLibrary.Redis
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
   mailpit:
     image: axllent/mailpit:latest
     container_name: mailpit
@@ -7,10 +59,3 @@
       - "8025:8025"   # Web UI
       - "3025:1025"   # SMTP (host:container)
     restart: unless-stopped
-    
-  book-lib-redis:
-    image: redis:latest
-    container_name: BookLibrary.Redis
-    restart: always
-    ports:
-      - "6379:6379"

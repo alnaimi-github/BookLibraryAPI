@@ -24,15 +24,12 @@ builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-    
-    app.ApplyMigrations();
-    
-    app.Seed();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
+
+app.ApplyMigrations();
+app.Seed();
+
 
 app.UseExceptionHandler();
 app.UseCustomExceptionHandler();

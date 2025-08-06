@@ -7,8 +7,8 @@ using MimeKit;
 namespace BookLibraryAPI.Infrastructure.Adapters.Email;
 
 public class EmailNotificationAdapter(
-    IConfiguration configuration, 
-    ILogger<EmailNotificationAdapter> logger) 
+    IConfiguration configuration,
+    ILogger<EmailNotificationAdapter> logger)
     : IEmailNotificationPort
 {
     public async Task SendWelcomeEmailAsync(string bookTitle, string author,
@@ -39,7 +39,7 @@ public class EmailNotificationAdapter(
             var message = new MimeMessage();
             var from = configuration["Email:From"];
             message.From.Add(new MailboxAddress("Library Management System", from));
-            
+
             message.To.Add(new MailboxAddress("", to));
             message.Subject = subject;
 
@@ -52,8 +52,8 @@ public class EmailNotificationAdapter(
 
             using var client = new SmtpClient();
             await client.ConnectAsync(
-                configuration["Email:Host"],
-                int.Parse(configuration["Email:Port"] ?? "8025"),
+                configuration["Email:SmtpHost"],
+                int.Parse(configuration["Email:SmtpPort"] ?? "1025"),
                 false,
                 cancellationToken);
 

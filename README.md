@@ -209,3 +209,58 @@ Pull requests are welcome! Please follow the existing code style and add tests f
 
 ## License
 MIT
+
+## Recent Changes & Improvements
+
+### Docker & HTTPS
+- The API now supports HTTPS in Docker using a development certificate.
+- Default HTTPS port is `9443` (see `compose.yaml` and `appsettings.json`).
+- Access the API in Docker at: `https://localhost:9443/swagger`
+
+### Email Notification Reliability
+- The `Email` section in `appsettings.json` now includes a required `To` field to avoid null recipient errors.
+- SMTP configuration keys in code were fixed to match the settings (`SmtpHost`, `SmtpPort`).
+
+### CI/CD Pipeline
+- The GitHub Actions workflow (`.github/workflows/ci-cd.yml`) now includes:
+  - Build, test (unit & integration), and artifact upload.
+  - Docker image build and push to DockerHub.
+  - Docker Compose deployment.
+  - Mailpit service for email integration tests, ensuring all tests pass in CI.
+
+## How to Check if the Application is Running
+
+### Locally (Docker)
+1. Run:
+   ```sh
+   docker compose up -d
+   ```
+2. Visit:
+   - API: `https://localhost:9443/swagger`
+   - Mailpit UI: `http://localhost:8025`
+3. Check logs:
+   ```sh
+   docker compose logs app
+   ```
+
+### In CI/CD (GitHub Actions)
+- On every push/PR to `main`, the workflow will:
+  - Build and test the app.
+  - Deploy the latest image with Docker Compose.
+  - You can view workflow status and logs in the GitHub Actions tab.
+
+## Testing
+
+The project includes comprehensive unit and integration tests:
+
+- **Unit Tests:** Located in `tests/BookLibraryAPI.UnitTests`. Run with:
+  ```sh
+  dotnet test tests/BookLibraryAPI.UnitTests/BookLibraryAPI.UnitTests.csproj
+  ```
+- **Integration Tests:** Located in `tests/BookLibraryAPI.IntegrationTests`. These use Testcontainers for PostgreSQL, Redis, and Mailpit. Run with:
+  ```sh
+  dotnet test tests/BookLibraryAPI.IntegrationTests/BookLibraryAPI.IntegrationTests.csproj
+  ```
+- **CI/CD:** All tests are automatically run in GitHub Actions on every push and pull request to `main`. Test results are uploaded as artifacts.
+
+You can view test results in the GitHub Actions tab or by running the above commands locally.
