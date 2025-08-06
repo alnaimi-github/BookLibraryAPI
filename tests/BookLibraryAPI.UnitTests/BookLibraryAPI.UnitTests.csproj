@@ -19,4 +19,8 @@
     <Using Include="Xunit" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Core\BookLibraryAPI.Core.Domain\BookLibraryAPI.Core.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
