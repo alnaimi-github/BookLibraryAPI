@@ -12,6 +12,7 @@
   <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="6.0.0" />
     <PackageReference Include="FluentAssertions" Version="8.5.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.*" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
     <PackageReference Include="Moq" Version="4.20.72" />
     <PackageReference Include="Testcontainers.PostgreSql" Version="4.6.0" />
@@ -28,6 +29,7 @@
     <ProjectReference Include="..\..\src\Infrastructure\BookLibraryAPI.Infrastructure\BookLibraryAPI.Infrastructure.csproj" />
     <ProjectReference Include="..\..\src\Application\BookLibraryAPI.Application\BookLibraryAPI.Application.csproj" />
     <ProjectReference Include="..\..\src\Core\BookLibraryAPI.Core.Domain\BookLibraryAPI.Core.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Presentation\BookLibraryAPI.Presentation\BookLibraryAPI.Presentation.csproj" />
   </ItemGroup>
 
 </Project>

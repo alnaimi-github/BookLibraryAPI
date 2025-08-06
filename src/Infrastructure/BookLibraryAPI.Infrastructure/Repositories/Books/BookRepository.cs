@@ -5,12 +5,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BookLibraryAPI.Infrastructure.Repositories.Books;
 
-internal sealed class BookRepository(LibraryDbContext context) : IBookRepository
+public sealed class BookRepository(LibraryDbContext context) : IBookRepository
 {
     public async Task<IEnumerable<Book>> GetAllAsync(CancellationToken cancellationToken = default)
     {
         return await context.Books
-            .AsNoTracking()   
+            .AsNoTracking()
             .OrderByDescending(b => b.CreatedAt)
             .ToListAsync(cancellationToken);
     }
@@ -24,7 +24,7 @@ internal sealed class BookRepository(LibraryDbContext context) : IBookRepository
     {
         context.Books.Add(book);
         await context.SaveChangesAsync(cancellationToken);
-        
+
         return book;
     }
 
@@ -32,7 +32,7 @@ internal sealed class BookRepository(LibraryDbContext context) : IBookRepository
     {
         context.Books.Update(book);
         await context.SaveChangesAsync(cancellationToken);
-        
+
         return book;
     }
 
@@ -50,5 +50,5 @@ internal sealed class BookRepository(LibraryDbContext context) : IBookRepository
     {
         return await context.Books.AnyAsync(b => b.Id == id, cancellationToken);
     }
-    
+
 }

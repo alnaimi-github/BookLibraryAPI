@@ -4,6 +4,8 @@ using FluentAssertions;
 using StackExchange.Redis;
 using Testcontainers.Redis;
 using Xunit;
+using Microsoft.Extensions.Logging;
+using Moq;
 
 namespace BookLibraryAPI.IntegrationTests.Books;
 
@@ -17,7 +19,8 @@ public class RedisCacheAdapterIntegrationTests : IAsyncLifetime
     {
         await _redisContainer.StartAsync();
         _redis = await ConnectionMultiplexer.ConnectAsync(_redisContainer.GetConnectionString());
-        _cache = new RedisCacheAdapter(_redis, null!); // Logger is not used in basic tests
+        var mockLogger = new Mock<ILogger<RedisCacheAdapter>>();
+        _cache = new RedisCacheAdapter(_redis, mockLogger.Object);
     }
 
     public async Task DisposeAsync()
