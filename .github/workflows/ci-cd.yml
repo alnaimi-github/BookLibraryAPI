@@ -72,6 +72,6 @@ jobs:
           file: src/Presentation/BookLibraryAPI.Presentation/Dockerfile
           push: true
           tags: abdulwaisa/booklibraryapi:latest
-      - name: Deploy with Docker Compose
-        run: |
-          docker compose -f docker-compose.example.yaml up -d
+      # - name: Deploy with Docker Compose //If dploy on server directly 
+      #   run: |
+      #     docker compose -f docker-compose.example.yaml up -d
