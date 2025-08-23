@@ -22,12 +22,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="..\..\..\.dockerignore">
-        <Link>.dockerignore</Link>
-      </Content>
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\..\..\BookLibrary.ServiceDefaults\BookLibrary.ServiceDefaults.csproj" />
       <ProjectReference Include="..\..\Infrastructure\BookLibraryAPI.Infrastructure\BookLibraryAPI.Infrastructure.csproj" />
     </ItemGroup>

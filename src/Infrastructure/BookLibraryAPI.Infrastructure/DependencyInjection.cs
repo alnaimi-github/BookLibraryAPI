@@ -75,7 +75,7 @@ public static class DependencyInjection
     
     private static void AddPersistence( IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("LibraryDbConnection");
+        var connectionString = configuration.GetConnectionString("bookLabDb");
         
         services.AddDbContext<LibraryDbContext>(options =>
             options.UseNpgsql(connectionString, npgsqlOptions =>
@@ -94,9 +94,11 @@ public static class DependencyInjection
     {
         services.AddSingleton<IConnectionMultiplexer>(provider =>
         {
-            var connectionString = configuration.GetConnectionString("Redis");
+            var connectionString = configuration.GetConnectionString("cache");
             return ConnectionMultiplexer.Connect(connectionString!);
         });
+
+
     
             services.AddSingleton<ICachePort,  RedisCacheAdapter>();
     }

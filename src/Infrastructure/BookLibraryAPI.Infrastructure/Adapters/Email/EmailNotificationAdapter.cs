@@ -26,7 +26,8 @@ public class EmailNotificationAdapter(
             <p>Thank you for using our Library Management System!</p>
         ";
 
-        await SendNotificationAsync(configuration["Email:To"]!, subject, body, cancellationToken);
+        var to = configuration["Email:To"] ?? configuration["Email:From"] ?? "admin@example.com";
+        await SendNotificationAsync(to, subject, body, cancellationToken);
     }
 
     private async Task SendNotificationAsync(string to, string subject, string body,
@@ -34,28 +35,21 @@ public class EmailNotificationAdapter(
     {
         try
         {
-            logger.LogDebug("Sending email to: {To}, Subject: {Subject}", to, subject);
+            var (host, port) = ResolveSmtpEndpoint(configuration);
+            logger.LogInformation("SMTP endpoint resolved: {Host}:{Port}", host, port);
 
             var message = new MimeMessage();
-            var from = configuration["Email:From"];
+            var from = configuration["Email:From"] ?? "no-reply@example.com";
             message.From.Add(new MailboxAddress("Library Management System", from));
 
-            message.To.Add(new MailboxAddress("", to));
+            message.To.Add(new MailboxAddress(string.Empty, to));
             message.Subject = subject;
 
-            var bodyBuilder = new BodyBuilder
-            {
-                HtmlBody = body
-            };
-
+            var bodyBuilder = new BodyBuilder { HtmlBody = body };
             message.Body = bodyBuilder.ToMessageBody();
 
             using var client = new SmtpClient();
-            await client.ConnectAsync(
-                configuration["Email:SmtpHost"],
-                int.Parse(configuration["Email:SmtpPort"] ?? "1025"),
-                false,
-                cancellationToken);
+            await client.ConnectAsync(host, port, false, cancellationToken);
 
             await client.SendAsync(message, cancellationToken);
             await client.DisconnectAsync(true, cancellationToken);
@@ -64,7 +58,28 @@ public class EmailNotificationAdapter(
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Failed to send email to: {To}", to);
+            var (host, port) = ResolveSmtpEndpoint(configuration);
+            logger.LogError(ex, "Failed to send email to: {To}. SMTP endpoint: {Host}:{Port}. Error: {Message}", to, host, port, ex.Message);
         }
+    }
+
+    private static (string host, int port) ResolveSmtpEndpoint(IConfiguration configuration)
+    {
+        var conn = configuration.GetConnectionString("mailpit") ?? configuration["ConnectionStrings:mailpit"];
+        if (!string.IsNullOrWhiteSpace(conn) && Uri.TryCreate(conn, UriKind.Absolute, out var uri))
+        {
+            var host = string.IsNullOrWhiteSpace(uri.Host) ? "localhost" : uri.Host;
+            var port = uri.IsDefaultPort ? 1025 : uri.Port;
+            return (host, port);
+        }
+
+        var hostFallback = configuration["Email:SmtpHost"] ?? "localhost";
+        var portStr = configuration["Email:SmtpPort"];
+        var portFallback = 1025;
+        if (!string.IsNullOrWhiteSpace(portStr) && int.TryParse(portStr, out var parsed))
+        {
+            portFallback = parsed;
+        }
+        return (hostFallback, portFallback);
     }
 }
