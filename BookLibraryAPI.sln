@@ -32,6 +32,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookLibraryAPI.UnitTests", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookLibraryAPI.IntegrationTests", "tests\BookLibraryAPI.IntegrationTests\BookLibraryAPI.IntegrationTests.csproj", "{2A018181-4446-428F-8544-41E74C879EF4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookLibrary.AppHost", "BookLibrary.AppHost\BookLibrary.AppHost.csproj", "{E6BDBFF7-86B8-41CF-85F8-D8025EFB9178}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookLibrary.ServiceDefaults", "BookLibrary.ServiceDefaults\BookLibrary.ServiceDefaults.csproj", "{FC2F720D-C5C4-5A6D-9A1B-5464B4E29CFC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -114,6 +118,30 @@ Global
 		{2A018181-4446-428F-8544-41E74C879EF4}.Release|x64.Build.0 = Release|Any CPU
 		{2A018181-4446-428F-8544-41E74C879EF4}.Release|x86.ActiveCfg = Release|Any CPU
 		{2A018181-4446-428F-8544-41E74C879EF4}.Release|x86.Build.0 = Release|Any CPU
+		{E6BDBFF7-86B8-41CF-85F8-D8025EFB9178}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6BDBFF7-86B8-41CF-85F8-D8025EFB9178}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6BDBFF7-86B8-41CF-85F8-D8025EFB9178}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E6BDBFF7-86B8-41CF-85F8-D8025EFB9178}.Debug|x64.Build.0 = Debug|Any CPU
+		{E6BDBFF7-86B8-41CF-85F8-D8025EFB9178}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E6BDBFF7-86B8-41CF-85F8-D8025EFB9178}.Debug|x86.Build.0 = Debug|Any CPU
+		{E6BDBFF7-86B8-41CF-85F8-D8025EFB9178}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6BDBFF7-86B8-41CF-85F8-D8025EFB9178}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6BDBFF7-86B8-41CF-85F8-D8025EFB9178}.Release|x64.ActiveCfg = Release|Any CPU
+		{E6BDBFF7-86B8-41CF-85F8-D8025EFB9178}.Release|x64.Build.0 = Release|Any CPU
+		{E6BDBFF7-86B8-41CF-85F8-D8025EFB9178}.Release|x86.ActiveCfg = Release|Any CPU
+		{E6BDBFF7-86B8-41CF-85F8-D8025EFB9178}.Release|x86.Build.0 = Release|Any CPU
+		{FC2F720D-C5C4-5A6D-9A1B-5464B4E29CFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC2F720D-C5C4-5A6D-9A1B-5464B4E29CFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC2F720D-C5C4-5A6D-9A1B-5464B4E29CFC}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{FC2F720D-C5C4-5A6D-9A1B-5464B4E29CFC}.Debug|x64.Build.0 = Debug|Any CPU
+		{FC2F720D-C5C4-5A6D-9A1B-5464B4E29CFC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FC2F720D-C5C4-5A6D-9A1B-5464B4E29CFC}.Debug|x86.Build.0 = Debug|Any CPU
+		{FC2F720D-C5C4-5A6D-9A1B-5464B4E29CFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC2F720D-C5C4-5A6D-9A1B-5464B4E29CFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC2F720D-C5C4-5A6D-9A1B-5464B4E29CFC}.Release|x64.ActiveCfg = Release|Any CPU
+		{FC2F720D-C5C4-5A6D-9A1B-5464B4E29CFC}.Release|x64.Build.0 = Release|Any CPU
+		{FC2F720D-C5C4-5A6D-9A1B-5464B4E29CFC}.Release|x86.ActiveCfg = Release|Any CPU
+		{FC2F720D-C5C4-5A6D-9A1B-5464B4E29CFC}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -6,6 +6,8 @@ using BookLibraryAPI.Presentation.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.AddServiceDefaults();
+
 builder.Services.AddSwaggerWithJwtAuth();
 
 builder.Services
@@ -23,6 +25,8 @@ builder.Services.AddProblemDetails(options =>
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 var app = builder.Build();
+
+app.MapDefaultEndpoints();
 
 app.UseSwagger();
 app.UseSwaggerUI();
