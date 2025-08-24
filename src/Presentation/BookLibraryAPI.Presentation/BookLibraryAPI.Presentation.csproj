@@ -25,6 +25,11 @@
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
     </ItemGroup>
 
+	<ItemGroup>
+		<PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.4.1" />
+		<PackageReference Include="Aspire.StackExchange.Redis.DistributedCaching" Version="9.4.1" />
+	</ItemGroup>
+
     <ItemGroup>
       <ProjectReference Include="..\..\Application\BookLibraryAPI.Application\BookLibraryAPI.Application.csproj" />
       <ProjectReference Include="..\..\Infrastructure\BookLibraryAPI.Infrastructure\BookLibraryAPI.Infrastructure.csproj" />
