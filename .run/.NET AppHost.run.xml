@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name=".NET AppHost" type="DotNetProject" factoryName=".NET Project">
+    <option name="PROJECT_PATH" value="$PROJECT_DIR$/src/AppHost/BookLibrary.AppHost.csproj" />
+    <option name="PROJECT_NAME" value="BookLibrary.AppHost" />
+    <option name="CONFIGURATION" value="Debug" />
+    <option name="PROGRAM_PARAMETERS" value="" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/AppHost" />
+    <option name="PASS_PARENT_ENVS" value="1" />
+    <envs>
+      <env name="ASPNETCORE_ENVIRONMENT" value="Development" />
+      <env name="DOTNET_ENVIRONMENT" value="Development" />
+      <env name="ASPIRE_ALLOW_UNSECURED_TRANSPORT" value="true" />
+      <env name="ASPIRE_DASHBOARD_OTLP_ENDPOINT_URL" value="http://localhost:19281" />
+      <env name="ASPIRE_RESOURCE_SERVICE_ENDPOINT_URL" value="http://localhost:20188" />
+    </envs>
+    <method v="2">
+      <option name="Build" enabled="true" />
+    </method>
+  </configuration>
+</component>

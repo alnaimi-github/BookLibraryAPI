@@ -29,9 +29,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookLibraryAPI.UnitTests", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookLibraryAPI.IntegrationTests", "tests\BookLibraryAPI.IntegrationTests\BookLibraryAPI.IntegrationTests.csproj", "{2A018181-4446-428F-8544-41E74C879EF4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookLibrary.AppHost", "BookLibrary.AppHost\BookLibrary.AppHost.csproj", "{E6BDBFF7-86B8-41CF-85F8-D8025EFB9178}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookLibrary.AppHost", "src\AppHost\BookLibrary.AppHost.csproj", "{E6BDBFF7-86B8-41CF-85F8-D8025EFB9178}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookLibrary.ServiceDefaults", "BookLibrary.ServiceDefaults\BookLibrary.ServiceDefaults.csproj", "{FC2F720D-C5C4-5A6D-9A1B-5464B4E29CFC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookLibrary.ServiceDefaults", "src\ServiceDefaults\BookLibrary.ServiceDefaults.csproj", "{FC2F720D-C5C4-5A6D-9A1B-5464B4E29CFC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

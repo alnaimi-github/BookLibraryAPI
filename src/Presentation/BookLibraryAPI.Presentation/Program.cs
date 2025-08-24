@@ -3,12 +3,22 @@ using BookLibraryAPI.Infrastructure;
 using BookLibraryAPI.Presentation.Endpoints;
 using BookLibraryAPI.Presentation.Extensions;
 using BookLibraryAPI.Presentation.Middleware;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
 
 builder.Services.AddSwaggerWithJwtAuth();
+
+
+builder.AddNpgsqlDbContext<BookLibraryAPI.Infrastructure.Persistence.LibraryDbContext>(
+    "bookLabDb",
+    configureSettings: null,
+    configureDbContextOptions: db => db.UseNpgsql(o => o.MigrationsAssembly(typeof(BookLibraryAPI.Infrastructure.Persistence.LibraryDbContext).Assembly.FullName))
+);
+
+builder.AddRedisDistributedCache(connectionName: "cache");
 
 builder.Services
     .AddApplication()
@@ -34,10 +44,8 @@ app.UseSwaggerUI();
 app.ApplyMigrations();
 app.Seed();
 
-
 app.UseExceptionHandler();
 app.UseCustomExceptionHandler();
-
 
 app.UseAuthentication();
 app.UseAuthorization();

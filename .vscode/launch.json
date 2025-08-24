@@ -1,0 +1,23 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": ".NET AppHost",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/src/AppHost/bin/Debug/net8.0/BookLibrary.AppHost.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/src/AppHost",
+      "console": "internalConsole",
+      "stopAtEntry": false,
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "DOTNET_ENVIRONMENT": "Development",
+        "ASPIRE_ALLOW_UNSECURED_TRANSPORT": "true",
+        "ASPIRE_DASHBOARD_OTLP_ENDPOINT_URL": "http://localhost:19281",
+        "ASPIRE_RESOURCE_SERVICE_ENDPOINT_URL": "http://localhost:20188"
+      }
+    }
+  ]
+}

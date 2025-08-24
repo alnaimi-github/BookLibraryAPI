@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Presentation\BookLibraryAPI.Presentation\BookLibraryAPI.Presentation.csproj" />
+    <ProjectReference Include="..\Presentation\BookLibraryAPI.Presentation\BookLibraryAPI.Presentation.csproj" />
   </ItemGroup>
 
 </Project>

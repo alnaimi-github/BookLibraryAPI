@@ -1,13 +1,11 @@
 ﻿using BookLibraryAPI.Application.Common.Services.Authentication;
 using BookLibraryAPI.Core.Domain.Interfaces.Repositories;
-using BookLibraryAPI.Infrastructure.Persistence;
 using BookLibraryAPI.Infrastructure.Repositories;
 using BookLibraryAPI.Infrastructure.Repositories.Books;
 using BookLibraryAPI.Infrastructure.Repositories.Users;
 using BookLibraryAPI.Infrastructure.Services.Authentication;
 using BookLibraryAPI.Infrastructure.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -17,30 +15,24 @@ using BookLibraryAPI.Core.Domain.Interfaces.Ports.Email;
 using BookLibraryAPI.Core.Domain.Users.Enums;
 using BookLibraryAPI.Infrastructure.Adapters.Caching;
 using BookLibraryAPI.Infrastructure.Adapters.Email;
-using StackExchange.Redis;
 
 namespace BookLibraryAPI.Infrastructure;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services, 
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services,
         IConfiguration configuration)
     {
         AddAuthentication(services, configuration);
-
         AddAuthorization(services);
-        
-        AddPersistence(services,configuration);
-        
         AddRepositories(services);
 
         services.AddScoped<IEmailNotificationPort, EmailNotificationAdapter>();
-        
-        AddCaching(services, configuration);
+
+        services.AddSingleton<ICachePort, RedisCacheAdapter>();
 
         return services;
     }
-    
     
     private static void AddAuthentication(IServiceCollection services, IConfiguration configuration)
     {
@@ -73,14 +65,6 @@ public static class DependencyInjection
         services.AddScoped<IUserRepository, UserRepository>();
     }
     
-    private static void AddPersistence( IServiceCollection services, IConfiguration configuration)
-    {
-        var connectionString = configuration.GetConnectionString("bookLabDb");
-        
-        services.AddDbContext<LibraryDbContext>(options =>
-            options.UseNpgsql(connectionString, npgsqlOptions =>
-                npgsqlOptions.MigrationsAssembly(typeof(LibraryDbContext).Assembly.FullName)));
-    }
     private static void AddAuthorization(IServiceCollection services)
     {
         services.AddAuthorization(options =>
@@ -89,18 +73,4 @@ public static class DependencyInjection
                 policy.RequireRole(nameof(UserRole.Moderator), nameof(UserRole.Admin)));
         });
     }
-    
-    private static void AddCaching(IServiceCollection services, IConfiguration configuration)
-    {
-        services.AddSingleton<IConnectionMultiplexer>(provider =>
-        {
-            var connectionString = configuration.GetConnectionString("cache");
-            return ConnectionMultiplexer.Connect(connectionString!);
-        });
-
-
-    
-            services.AddSingleton<ICachePort,  RedisCacheAdapter>();
-    }
-
 }

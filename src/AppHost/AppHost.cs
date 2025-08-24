@@ -22,7 +22,12 @@ builder.AddProject<Projects.BookLibraryAPI_Presentation>("booklibraryapi-present
     .WithReference(bookLabDb)
     .WithReference(cache)
     .WithReference(email)
-    .WithEnvironment("ConnectionStrings__mailpit", email.GetEndpoint("smtp"))
+    .WithExternalHttpEndpoints()
+    .WithHttpEndpoint()
+    .WithHttpsEndpoint()
+    .WithEnvironment("EMAIL__FROM", "library@example.com")
+    .WithEnvironment("EMAIL__TO", "admin@example.com")
+    .WithEnvironment("MAILPIT__SMTP", email.GetEndpoint("smtp"))
     .WaitFor(bookLabDb)
     .WaitFor(email);
 
