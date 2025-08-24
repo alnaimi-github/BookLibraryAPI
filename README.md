@@ -1,4 +1,9 @@
-﻿# BookLibraryAPI
+﻿# BookLibraryAPI - V2 with .NET Aspire 
+
+
+ <img width="1919" height="1013" alt="image" src="https://github.com/user-attachments/assets/7be1fb64-8544-4704-84b2-3a7ab7d0fcf9" />
+
+ 
 
 BookLibraryAPI is a modular, layered .NET 8 Web API for managing a library of books and users, following Clean Architecture and SOLID principles. It supports JWT authentication, role-based authorization, email notifications, and is ready for containerized development with Docker and Mailpit.
 
